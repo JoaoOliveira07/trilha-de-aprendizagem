@@ -1,0 +1,10 @@
+DBeaver --> PostGres
+Podemos criar um banco de dados no próprio de DBeaver, fica a seu criterio.
+Meu CRUD usou essa tabela abaixo para fazer execução de métodos como cadastrar, alterar, consultar e excluir.
+create table produtos(
+	codigoDoProduto serial primary key,
+	nomeDoProduto VARCHAR(100) not null,
+	valorDeCusto decimal(5,2) not null,
+	valorDeVenda decimal(5,2) not null,
+	quantidadeDeEstoque int not null
+);
