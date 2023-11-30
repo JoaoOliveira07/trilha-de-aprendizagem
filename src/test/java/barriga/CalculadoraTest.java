@@ -1,10 +1,10 @@
-package com.tests;
+package barriga;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import trilha.testsjunit.com.tests.Calculadora;
+import trilha.testsjunit.barriga.Calculadora;
 
 import java.util.ArrayList;
 import java.util.List;

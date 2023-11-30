@@ -1,14 +1,16 @@
-package barriga.domain.infra;
+package barriga.infra;
+
 
 import trilha.testsjunit.barriga.domain.Usuario;
-import trilha.testsjunit.barriga.domain.service.repository.UsuarioRepository;
+import trilha.testsjunit.barriga.service.repository.UsuarioRepository;
 
 import java.util.Optional;
 
-import static trilha.testsjunit.barriga.domain.builders.UsuarioBuilder.umUsuario;
+import static barriga.domain.builders.UsuarioBuilder.umUsuario;
 
 
 public class UsuarioDummyRepository implements UsuarioRepository {
+
     @Override
     public Usuario salvar(Usuario usuario) {
         return umUsuario()
@@ -18,11 +20,11 @@ public class UsuarioDummyRepository implements UsuarioRepository {
                 .agora();
     }
 
-
     @Override
     public Optional<Usuario> getUserByEmail(String email) {
-        if ("user1@gmail.com".equals(email))
+        if("user@mail.com".equals(email))
             return Optional.of(umUsuario().comEmail(email).agora());
         return Optional.empty();
     }
+
 }

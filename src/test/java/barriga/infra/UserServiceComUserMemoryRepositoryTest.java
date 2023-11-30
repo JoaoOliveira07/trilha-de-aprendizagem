@@ -1,14 +1,19 @@
-package barriga.domain.infra;
+package barriga.infra;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import trilha.testsjunit.barriga.domain.Usuario;
 import trilha.testsjunit.barriga.domain.exceptions.ValidationException;
-import trilha.testsjunit.barriga.domain.infra.UsuarioMemoryRepository;
-import trilha.testsjunit.barriga.domain.service.UsuarioService;
+import trilha.testsjunit.barriga.infra.UsuarioMemoryRepository;
+import trilha.testsjunit.barriga.service.UsuarioService;
 
-import static trilha.testsjunit.barriga.domain.builders.UsuarioBuilder.umUsuario;
+import static barriga.domain.builders.UsuarioBuilder.umUsuario;
 
-
+@Tag("infra")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserServiceComUserMemoryRepositoryTest {
     private static UsuarioService service = new UsuarioService(new UsuarioMemoryRepository());
@@ -21,10 +26,10 @@ public class UserServiceComUserMemoryRepositoryTest {
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     public void deveRejeitarUsuarioExistente() {
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
                 service.salvar(umUsuario().comId(null).agora()));
-        Assertions.assertEquals("Usuário user1@gmail.com já cadastrado!", ex.getMessage());
+        Assertions.assertEquals("Usuário user@mail.com já cadastrado!", ex.getMessage());
     }
 }

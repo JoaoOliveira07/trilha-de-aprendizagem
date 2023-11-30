@@ -1,25 +1,33 @@
 package barriga.domain;
 
+
+import static barriga.domain.builders.UsuarioBuilder.umUsuario;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import trilha.testsjunit.barriga.domain.Usuario;
 import trilha.testsjunit.barriga.domain.exceptions.ValidationException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static trilha.testsjunit.barriga.domain.builders.UsuarioBuilder.umUsuario;
-
-
+@Tag("dominio")
+@Tag("usuario")
+@DisplayName("Domínio: Usuário")
 public class UsuarioTest {
 
     @Test
+    @DisplayName("Deve criar um usuário válido")
     public void deveCriarUsuarioValido() {
         Usuario usuario = umUsuario().agora();
+        umUsuario().comId(28L).agora();
+        System.out.println(usuario);
         Assertions.assertAll("Usuario",
                 () -> assertEquals(1L, usuario.getId()),
                 () -> assertEquals("Usuário Válido", usuario.getNome()),
-                () -> assertEquals("user1@gmail.com", usuario.getEmail()),
+                () -> assertEquals("user@mail.com", usuario.getEmail()),
                 () -> assertEquals("12345678", usuario.getSenha())
         );
     }
@@ -27,7 +35,7 @@ public class UsuarioTest {
     @Test
     public void deveRejeitarUsuarioSemNome() {
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
-               umUsuario().comNome(null).agora());
+                umUsuario().comNome(null).agora());
         assertEquals("Nome é obrigatório", ex.getMessage());
     }
 
@@ -42,12 +50,14 @@ public class UsuarioTest {
     public void deveRejeitarUsuarioSemSenha() {
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
                 umUsuario().comSenha(null).agora());
-        assertEquals("Senha é obrigatório", ex.getMessage());
+        assertEquals("Senha é obrigatória", ex.getMessage());
     }
 
-    @ParameterizedTest(name = "{4}")
-    @CsvFileSource(files = "src/main/resources/camposObrigatorios.csv", nullValues = "NULL", numLinesToSkip = 1)
-    public void deveRejeitarCampoObrigatorioNulo(Long id, String nome, String email, String senha, String mensagem){
+    @ParameterizedTest(name = "[{index}] - {4}")
+    @CsvFileSource(files = "src\\test\\resources\\camposObrigatoriosUsuario.csv", nullValues = "NULL", numLinesToSkip = 1)
+//	@ParameterizedTest
+//	@CsvFileSource(files = "src\\test\\resources\\camposObrigatoriosUsuario.csv", nullValues = "NULL", useHeadersInDisplayName = true)
+    public void deveValidarCamposObrigatorios(Long id, String nome, String email, String senha, String mensagem) {
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
                 umUsuario().comId(id).comNome(nome).comEmail(email).comSenha(senha).agora());
         assertEquals(mensagem, ex.getMessage());

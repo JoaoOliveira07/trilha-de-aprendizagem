@@ -1,4 +1,4 @@
-package trilha.testsjunit.barriga.domain.builders;
+package barriga.domain.builders;
 
 
 import trilha.testsjunit.barriga.domain.Usuario;
@@ -17,10 +17,10 @@ public class UsuarioBuilder {
         return builder;
     }
 
-    private static void inicializarDadosPadroes(UsuarioBuilder builder) {
+    public static void inicializarDadosPadroes(UsuarioBuilder builder) {
         builder.id = 1L;
         builder.nome = "Usuário Válido";
-        builder.email = "user1@gmail.com";
+        builder.email = "user@mail.com";
         builder.senha = "12345678";
     }
 

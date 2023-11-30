@@ -1,9 +1,5 @@
-package trilha.testsjunit.barriga.domain.builders;
-
-
+package barriga.domain.builders;
 import trilha.testsjunit.barriga.domain.Conta;
-
-import static java.lang.String.format;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -15,10 +11,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+
+
 /**
  * Classe responsável pela criação de builders de entidades
  *
  * @author wcaquino@gmail.com
+ *
  */
 public class BuilderMaster {
 
@@ -50,7 +50,7 @@ public class BuilderMaster {
         builder.append("\t\treturn builder;\n");
         builder.append("\t}\n\n");
 
-        builder.append(format("\tprivate static void inicializarDadosPadroes(%s builder) {\n", nomeClasse));
+        builder.append(format("\tpublic static void inicializarDadosPadroes(%s builder) {\n", nomeClasse));
         declaredFields.forEach(campo -> builder.append(format("\t\tbuilder.%s = %s;\n", campo.getName(), getDefaultParameter(campo))));
         builder.append("\t}\n\n");
 
@@ -74,7 +74,7 @@ public class BuilderMaster {
         builder.append(format("\t\treturn new %s(", classe.getSimpleName()));
         boolean first = true;
         for (Field campo : declaredFields) {
-            if (first) {
+            if(first) {
                 first = false;
             } else {
                 builder.append(", ");
@@ -86,7 +86,7 @@ public class BuilderMaster {
         builder.append("}");
 
         for (String str : listaImports) {
-            if (!str.contains("java.lang."))
+            if(!str.contains("java.lang."))
                 System.out.println(str);
         }
         System.out.println(format("import %s;\n", classe.getCanonicalName()));

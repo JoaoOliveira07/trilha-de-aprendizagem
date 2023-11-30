@@ -1,4 +1,5 @@
-package trilha.testsjunit.barriga.domain.builders;
+package barriga.domain.builders;
+
 
 import trilha.testsjunit.barriga.domain.Conta;
 import trilha.testsjunit.barriga.domain.Usuario;
@@ -16,7 +17,7 @@ public class ContaBuilder {
         return builder;
     }
 
-    private static void inicializarDadosPadroes(ContaBuilder builder) {
+    public static void inicializarDadosPadroes(ContaBuilder builder) {
         builder.id = 1L;
         builder.nome = "Conta Válida";
         builder.usuario = UsuarioBuilder.umUsuario().agora();
